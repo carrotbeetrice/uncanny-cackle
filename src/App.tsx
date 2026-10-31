@@ -1,32 +1,19 @@
-import { useQuery } from "@tanstack/react-query";
-import { apiFetch } from "./api/client";
-import type { Health } from "./api/types";
 import Header from "./components/Header/Header";
+import useCustomerDataQuery from "./hooks/useCustomerDataQuery";
 
 export default function App() {
-  const health = useQuery({
-    queryKey: ["health"],
-    queryFn: () => apiFetch<Health>("/api/health"),
-    retry: false,
-  });
+  const customerData = useCustomerDataQuery();
 
-  const status = health.isPending
-    ? "checking…"
-    : health.isError
-      ? "not connected"
-      : "connected";
+  if (customerData.isLoading) {
+    return <>Placeholder</>;
+  }
 
   return (
     <div className="starter">
-      <Header />
-
+      <Header customer={customerData.data?.customer} />
       <main className="starter-main">
         <h1>Build the dashboard and transfer flow</h1>
-        <p>Helllo world!</p>
-
-        <p className="status" role="status">
-          Mock API: {status}
-        </p>
+        <p>Hello world!</p>
       </main>
     </div>
   );
