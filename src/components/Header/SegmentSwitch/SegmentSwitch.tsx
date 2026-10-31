@@ -1,4 +1,4 @@
-import { useSegment, type Segment } from "../../theme/SegmentContext";
+import { useSegment, type Segment } from "../../../theme/SegmentContext";
 import "./SegmentSwitch.css";
 
 const options: { value: Segment; label: string }[] = [

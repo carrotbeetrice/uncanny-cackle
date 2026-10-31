@@ -1,6 +1,6 @@
 import type { Customer } from "../../api/types";
-import SegmentSwitch from "../SegmentSwitch/SegmentSwitch";
-import ThemeToggle from "../ThemeToggle/ThemeToggle";
+import SegmentSwitch from "./SegmentSwitch/SegmentSwitch";
+import ThemeToggle from "./ThemeToggle/ThemeToggle";
 import "./Header.css";
 
 interface HeaderProps {
