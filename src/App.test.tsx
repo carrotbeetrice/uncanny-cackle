@@ -1,31 +1,34 @@
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
-import { render, screen, waitFor } from '@testing-library/react'
-import { describe, expect, it } from 'vitest'
-import App from './App'
-import { ThemeProvider } from './theme/ThemeContext'
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { render, screen, waitFor } from "@testing-library/react";
+import { describe, expect, it } from "vitest";
+import App from "./App";
+import { ThemeProvider } from "./theme/ThemeContext";
+import { SegmentProvider } from "./theme/SegmentContext";
 
 function renderApp() {
   const queryClient = new QueryClient({
     defaultOptions: { queries: { retry: false } },
-  })
+  });
 
   return render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <App />
+        <SegmentProvider>
+          <App />
+        </SegmentProvider>
       </ThemeProvider>
     </QueryClientProvider>,
-  )
+  );
 }
 
-describe('starter', () => {
-  it('reaches the mock API', async () => {
-    renderApp()
+describe("starter", () => {
+  it("reaches the mock API", async () => {
+    renderApp();
 
-    const status = screen.getByRole('status')
+    const status = screen.getByRole("status");
     await waitFor(
-      () => expect(status).toHaveTextContent('Mock API: connected'),
+      () => expect(status).toHaveTextContent("Mock API: connected"),
       { timeout: 3000 },
-    )
-  })
-})
+    );
+  });
+});

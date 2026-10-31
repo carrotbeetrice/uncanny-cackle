@@ -21,6 +21,9 @@ src
 │   │   ├── Header.css
 │   │   ├── Header.test.tsx
 │   │   └── Header.tsx
+│   ├── SegmentSwitch
+│   │   ├── SegmentSwitch.css
+│   │   └── SegmentSwitch.tsx
 │   └── ThemeToggle
 │       ├── ThemeToggle.css
 │       ├── ThemeToggle.test.tsx

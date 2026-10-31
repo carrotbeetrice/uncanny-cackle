@@ -6,12 +6,15 @@
     <meta name="theme-color" content="#f4f6fa" />
     <title>Meridian Banking</title>
     <script>
-      // Apply the theme before first paint to avoid a flash: saved choice
-      // first, otherwise follow the system setting.
+      // Apply the theme and segment before first paint to avoid a flash.
+      // Theme: saved choice, otherwise the system setting.
+      // Segment: saved choice, otherwise keep the retail default above
+      // (the customer's own segment is only known once the API responds).
       (function () {
-        var theme;
+        var theme, segment;
         try {
           theme = localStorage.getItem('meridian-theme');
+          segment = localStorage.getItem('meridian-segment');
         } catch (e) {}
         if (theme !== 'light' && theme !== 'dark') {
           theme = window.matchMedia('(prefers-color-scheme: dark)').matches
@@ -19,6 +22,9 @@
             : 'light';
         }
         document.documentElement.setAttribute('data-theme', theme);
+        if (segment === 'retail' || segment === 'premium') {
+          document.documentElement.setAttribute('data-segment', segment);
+        }
       })();
     </script>
   </head>
