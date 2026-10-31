@@ -23,6 +23,7 @@ src
 │   │   └── Header.tsx
 │   ├── SegmentSwitch
 │   │   ├── SegmentSwitch.css
+│   │   ├── SegmentSwitch.test.tsx
 │   │   └── SegmentSwitch.tsx
 │   └── ThemeToggle
 │       ├── ThemeToggle.css
