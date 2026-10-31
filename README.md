@@ -17,9 +17,14 @@ src
 ├── App.test.tsx
 ├── App.tsx
 ├── components
-│   └── Header
-│       ├── Header.css
-│       └── Header.tsx
+│   ├── Header
+│   │   ├── Header.css
+│   │   ├── Header.test.tsx
+│   │   └── Header.tsx
+│   └── ThemeToggle
+│       ├── ThemeToggle.css
+│       ├── ThemeToggle.test.tsx
+│       └── ThemeToggle.tsx
 ├── index.css
 ├── lib
 │   ├── format.test.ts
@@ -30,6 +35,8 @@ src
 │   └── handlers.ts
 ├── test
 │   └── setup.ts
+├── theme
+│   └── ThemeContext.tsx
 └── vite-env.d.ts
 ```
 
@@ -37,6 +44,13 @@ src
 
 Server state vs UI state, forms and validation, theming, anything you
 chose deliberately, and what you'd change.
+
+- **Theme (TH1):** an inline script in `index.html` applies the saved theme
+  (or the system setting) to `<html data-theme>` before first paint, so there
+  is no flash. `ThemeProvider` (`src/theme/ThemeContext.tsx`) starts from that
+  value and exposes `theme` / `toggleTheme` via `useTheme()` for components
+  that need the theme in JS. Styling itself comes from the design tokens keyed
+  on `data-theme`, so most components never read the context.
 
 ## Loading, empty and error states
 
@@ -55,6 +69,7 @@ Claude Code usage(s):
 
 - CI/CD files setup
 - Commit message generation
+- Spec tests for `Header` / `ThemeToggle`, and the `ThemeProvider` context
 
 ## Not done / known issues
 

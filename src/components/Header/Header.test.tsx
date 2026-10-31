@@ -2,13 +2,15 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
 import type { Customer } from '../../api/types'
+import { ThemeProvider } from '../../theme/ThemeContext'
 import Header from './Header'
 
-// Spec tests for brief D2 (header) and TH1–TH3 (themes). Written ahead of the
-// implementation. The planned contract is:
+// Spec tests for brief D2 (header) and TH2–TH3 (segment). Written ahead of the
+// implementation. Light/dark toggle behaviour lives in ThemeToggle.test.tsx.
+// The planned contract is:
 // - `<Header customer={customer} />`, where `customer` is undefined while loading
-// - theme and segment are set on <html> as `data-theme` / `data-segment`
-// - choices are saved to localStorage under `meridian-theme` / `meridian-segment`
+// - the segment is set on <html> as `data-segment`
+// - the choice is saved to localStorage under `meridian-segment`
 
 const ava: Customer = {
   id: 'cus_001',
@@ -31,94 +33,49 @@ beforeEach(() => {
 describe('Header', () => {
   describe('content (D2)', () => {
     it('shows the Meridian logo', () => {
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       expect(screen.getByText('Meridian')).toBeInTheDocument()
     })
 
     it('greets the customer by first name', () => {
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       expect(screen.getByText('Good evening, Ava')).toBeInTheDocument()
     })
 
     it("shows the customer's initials as the avatar", () => {
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       expect(screen.getByText('AC')).toBeInTheDocument()
     })
 
     it('does not show a greeting while the customer is loading', () => {
-      render(<Header customer={undefined} />)
+      render(<Header customer={undefined} />, { wrapper: ThemeProvider })
 
       expect(screen.queryByText(/good evening/i)).not.toBeInTheDocument()
     })
 
     it('shows Cards, Payments and Insights as disabled', () => {
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       for (const name of ['Cards', 'Payments', 'Insights']) {
         expect(screen.getByText(name)).toHaveAttribute('aria-disabled', 'true')
       }
     })
-  })
 
-  describe('light/dark toggle (TH1, TH3)', () => {
-    it('has an accessible label and reflects the current theme', () => {
-      render(<Header customer={ava} />)
+    it('includes the light/dark toggle', () => {
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
-      const toggle = screen.getByRole('button', { name: /dark mode/i })
-      expect(toggle).toHaveAttribute('aria-pressed', 'false')
-    })
-
-    it('switches the theme on <html> and back again', async () => {
-      const user = userEvent.setup()
-      render(<Header customer={ava} />)
-      const toggle = screen.getByRole('button', { name: /dark mode/i })
-
-      await user.click(toggle)
-      expect(html).toHaveAttribute('data-theme', 'dark')
-      expect(toggle).toHaveAttribute('aria-pressed', 'true')
-
-      await user.click(toggle)
-      expect(html).toHaveAttribute('data-theme', 'light')
-      expect(toggle).toHaveAttribute('aria-pressed', 'false')
-    })
-
-    it('remembers the choice in localStorage', async () => {
-      const user = userEvent.setup()
-      render(<Header customer={ava} />)
-
-      await user.click(screen.getByRole('button', { name: /dark mode/i }))
-
-      expect(localStorage.getItem('meridian-theme')).toBe('dark')
-    })
-
-    it('starts from the theme already applied before first paint', () => {
-      html.setAttribute('data-theme', 'dark')
-      render(<Header customer={ava} />)
-
-      expect(screen.getByRole('button', { name: /dark mode/i })).toHaveAttribute(
-        'aria-pressed',
-        'true',
-      )
-    })
-
-    it('can be toggled with the keyboard', async () => {
-      const user = userEvent.setup()
-      render(<Header customer={ava} />)
-      const toggle = screen.getByRole('button', { name: /dark mode/i })
-
-      toggle.focus()
-      await user.keyboard('{Enter}')
-
-      expect(html).toHaveAttribute('data-theme', 'dark')
+      expect(
+        screen.getByRole('button', { name: /dark mode/i }),
+      ).toBeInTheDocument()
     })
   })
 
   describe('Retail/Premium switch (TH2, TH3)', () => {
     it("defaults to the customer's segment", () => {
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       expect(screen.getByRole('button', { name: 'Retail' })).toHaveAttribute(
         'aria-pressed',
@@ -133,7 +90,7 @@ describe('Header', () => {
     it('switches the segment on <html> without changing the theme', async () => {
       const user = userEvent.setup()
       html.setAttribute('data-theme', 'dark')
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       await user.click(screen.getByRole('button', { name: 'Premium' }))
 
@@ -151,7 +108,7 @@ describe('Header', () => {
 
     it('remembers the choice in localStorage', async () => {
       const user = userEvent.setup()
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       await user.click(screen.getByRole('button', { name: 'Premium' }))
 
@@ -160,7 +117,7 @@ describe('Header', () => {
 
     it("prefers a saved segment over the customer's default", () => {
       localStorage.setItem('meridian-segment', 'premium')
-      render(<Header customer={ava} />)
+      render(<Header customer={ava} />, { wrapper: ThemeProvider })
 
       expect(html).toHaveAttribute('data-segment', 'premium')
       expect(screen.getByRole('button', { name: 'Premium' })).toHaveAttribute(
