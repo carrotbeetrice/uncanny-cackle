@@ -35,11 +35,6 @@ export default function Header({ customer }: HeaderProps) {
           ))}
         </ul>
       </nav>
-      {customer && (
-        <span className="header-tagline">
-          Good evening, {customer?.firstName}
-        </span>
-      )}
       <SegmentSwitch />
       <ThemeToggle />
       {customer && (

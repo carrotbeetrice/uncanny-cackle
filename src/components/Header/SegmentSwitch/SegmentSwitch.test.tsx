@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { SegmentProvider, type Segment } from '../../theme/SegmentContext'
+import { SegmentProvider, type Segment } from '../../../theme/SegmentContext'
 import SegmentSwitch from './SegmentSwitch'
 
 // Spec tests for brief TH2 (segment) and TH3 (accessible toggles). The

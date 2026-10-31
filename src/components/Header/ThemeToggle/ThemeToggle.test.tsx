@@ -1,7 +1,7 @@
 import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { beforeEach, describe, expect, it } from 'vitest'
-import { ThemeProvider } from '../../theme/ThemeContext'
+import { ThemeProvider } from '../../../theme/ThemeContext'
 import ThemeToggle from './ThemeToggle'
 
 // Spec tests for brief TH1 (light/dark) and TH3 (accessible toggles). The
