@@ -39,24 +39,6 @@ code {
   padding: var(--space-8) var(--space-4);
 }
 
-.starter-header {
-  align-items: baseline;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: var(--space-4);
-  justify-content: space-between;
-  padding-bottom: var(--space-3);
-}
-
-.starter-header strong {
-  font-size: var(--text-lg);
-}
-
-.starter-header span {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
-}
-
 .starter-main {
   padding-top: var(--space-6);
 }

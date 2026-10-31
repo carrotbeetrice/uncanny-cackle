@@ -1,6 +1,7 @@
 import { useQuery } from "@tanstack/react-query";
 import { apiFetch } from "./api/client";
 import type { Health } from "./api/types";
+import Header from "./components/Header/Header";
 
 export default function App() {
   const health = useQuery({
@@ -17,10 +18,7 @@ export default function App() {
 
   return (
     <div className="starter">
-      <header className="starter-header">
-        <strong>Meridian</strong>
-        <span>Take-home starter</span>
-      </header>
+      <Header />
 
       <main className="starter-main">
         <h1>Build the dashboard and transfer flow</h1>

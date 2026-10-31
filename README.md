@@ -16,6 +16,10 @@ src
 │   └── types.ts
 ├── App.test.tsx
 ├── App.tsx
+├── components
+│   └── Header
+│       ├── Header.css
+│       └── Header.tsx
 ├── index.css
 ├── lib
 │   ├── format.test.ts
