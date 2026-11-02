@@ -1,6 +1,7 @@
 import DashboardSkeleton from "./components/DashboardSkeleton/DashboardSkeleton";
 import Header from "./components/Header/Header";
 import RetryState from "./components/RetryState/RetryState";
+import TransactionList from "./components/TransactionList/TransactionList";
 import useCustomerDataQuery from "./hooks/useCustomerDataQuery";
 
 export default function App() {
@@ -18,6 +19,9 @@ export default function App() {
           <>
             {customerData.data?.customer && (
               <h1>Good evening, {customerData.data?.customer.firstName}</h1>
+            )}
+            {customerData.data?.transactions && (
+              <TransactionList transactions={customerData.data.transactions} />
             )}
           </>
         )}
