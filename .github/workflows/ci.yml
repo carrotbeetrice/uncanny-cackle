@@ -32,6 +32,8 @@ jobs:
 
   build:
     needs: test
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
     steps:
       - name: Build
         run: npm run build
