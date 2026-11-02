@@ -1,0 +1,20 @@
+.search {
+  width: 100%;
+  min-height: var(--tap-target);
+  padding: 0 var(--space-4);
+  font: inherit;
+  font-size: var(--text-sm);
+  color: var(--text);
+  background: var(--surface);
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+}
+
+.search::placeholder {
+  color: var(--text-subtle);
+}
+
+.search:focus-visible {
+  outline: 2px solid var(--focus-ring);
+  outline-offset: 2px;
+}

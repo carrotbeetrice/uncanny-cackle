@@ -39,6 +39,9 @@ src
 │   │   ├── Skeleton.css
 │   │   └── Skeleton.tsx
 │   └── TransactionList
+│       ├── Search
+│       │   ├── Search.css
+│       │   └── Search.tsx
 │       ├── Transaction
 │       │   ├── Transaction.css
 │       │   ├── Transaction.test.tsx
@@ -81,6 +84,10 @@ chose deliberately, and what you'd change.
 - **Segment (TH2):** Target component for the switch is ambiguous. Selected a button group styled to appear like a `Switch` component from popular design library MUI.
   - The customer's `segment` from the API is the default (`brief/api-contract.md`), and a saved switch choice overrides it. `SegmentProvider` lives in `App` so it can receive that default once the customer loads.
   - Trade-off: the default is only known after `GET /api/customer` responds, so a premium customer with no saved choice sees retail colours for about 500 ms. Blocking the render until then would break the D1 skeleton. Possible fixes, not done to keep the provider simple: cache the last API segment in `localStorage` for the `index.html` script to apply before first paint (fixes repeat visits), and hide the brand-coloured `SegmentSwitch` until the customer loads (reduces the first-visit flash).
+- **Search (D6):** The brief doesn't say where the clear control goes, only that there must be "a way to clear the search".
+  - While a search has matches, a row above the list shows the result count (`N results`) with `Clear search` beside it. In the no-matches state that row hides and the required `Clear search` button sits under `No transactions match your search.`, so there's never more than one button with that name.
+  - `TransactionList` holds the input text (`query`) and the debounced value (`searchTerm`, 300 ms) used for filtering. `Search` keeps the debounce timer in a `useEffect`, so a new keystroke or a clear cancels any search still waiting. `Clear search` resets both values, so the full list comes back straight away.
+  - Which transactions search covers is ambiguous. D6 says "filter the list", and `brief/api-contract.md` allows either filtering "the 8 loaded rows" in the browser or using the API's `q` parameter. Neither says whether older transactions should be searchable. I chose the browser option: the dashboard requests `/api/transactions?limit=8` and search filters those 8 rows. It needs no extra request or loading state while typing, and it matches what the user can see. Trade-off: a transaction older than the 8 newest can't be found. Switching to `q` (with the debounced term in the query key) would fix that if it's wanted.
 
 ## Loading, empty and error states
 
