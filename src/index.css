@@ -33,28 +33,23 @@ code {
   padding: 0.1em 0.35em;
 }
 
+/* Hidden visually, still read by screen readers. */
+.visually-hidden {
+  border: 0;
+  clip: rect(0 0 0 0);
+  height: 1px;
+  margin: -1px;
+  overflow: hidden;
+  padding: 0;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px;
+}
+
 .starter {
   margin: 0 auto;
   max-width: 720px;
   padding: var(--space-8) var(--space-4);
-}
-
-.starter-header {
-  align-items: baseline;
-  border-bottom: 1px solid var(--border);
-  display: flex;
-  gap: var(--space-4);
-  justify-content: space-between;
-  padding-bottom: var(--space-3);
-}
-
-.starter-header strong {
-  font-size: var(--text-lg);
-}
-
-.starter-header span {
-  color: var(--text-muted);
-  font-size: var(--text-sm);
 }
 
 .starter-main {

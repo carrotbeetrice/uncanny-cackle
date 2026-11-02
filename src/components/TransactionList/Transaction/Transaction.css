@@ -1,0 +1,63 @@
+.transaction {
+  align-items: center;
+  border-top: 1px solid var(--border);
+  display: flex;
+  gap: var(--space-4);
+  justify-content: space-between;
+  padding: var(--space-3) 0;
+}
+
+.transaction__details {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-1);
+  min-width: 0;
+}
+
+.transaction__description {
+  font-weight: var(--weight-medium);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.transaction__meta {
+  color: var(--text-muted);
+  font-size: var(--text-sm);
+}
+
+/* API categories are lowercase ("groceries"); display them capitalised. */
+.transaction__category {
+  text-transform: capitalize;
+}
+
+.transaction__end {
+  align-items: flex-end;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: var(--space-1);
+}
+
+.transaction__amount {
+  font-variant-numeric: tabular-nums;
+  font-weight: var(--weight-semibold);
+  white-space: nowrap;
+}
+
+.transaction__amount--in {
+  color: var(--positive);
+}
+
+.transaction__amount--out {
+  color: var(--text);
+}
+
+.transaction__chip {
+  background: var(--warning-soft);
+  border-radius: var(--radius-full);
+  color: var(--warning);
+  font-size: var(--text-xs);
+  font-weight: var(--weight-medium);
+  padding: 0 var(--space-2);
+}
