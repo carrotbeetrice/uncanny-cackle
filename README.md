@@ -79,6 +79,8 @@ chose deliberately, and what you'd change.
   - Created a custom hook `useCustomerDataQuery` that queries and retries all 3 endpoints (`/api/customer`, `/api/accounts`, `/api/transactions`) in parallel. `isLoading` is false until all queries are completed. At least a single query failing will return `isError` as true. The exposed `retry` method only retries failed queries and avoids refetching loading/successful queries.
   - Use BEM class modifiers to allow the `Skeleton` to expose named sizes (`xs|sm|md|lg|xl`, `sm|base|lg|xl|2xl|3xl`) as props. Callers no longer required to explicitly define rem sizing
 - **Segment (TH2):** Target component for the switch is ambiguous. Selected a button group styled to appear like a `Switch` component from popular design library MUI.
+  - The customer's `segment` from the API is the default (`brief/api-contract.md`), and a saved switch choice overrides it. `SegmentProvider` lives in `App` so it can receive that default once the customer loads.
+  - Trade-off: the default is only known after `GET /api/customer` responds, so a premium customer with no saved choice sees retail colours for about 500 ms. Blocking the render until then would break the D1 skeleton. Possible fixes, not done to keep the provider simple: cache the last API segment in `localStorage` for the `index.html` script to apply before first paint (fixes repeat visits), and hide the brand-coloured `SegmentSwitch` until the customer loads (reduces the first-visit flash).
 
 ## Loading, empty and error states
 
