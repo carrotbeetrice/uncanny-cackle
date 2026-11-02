@@ -6,7 +6,6 @@ import { describe, expect, it } from "vitest";
 import App from "./App";
 import { server } from "./test/setup";
 import { ThemeProvider } from "./theme/ThemeContext";
-import { SegmentProvider } from "./theme/SegmentContext";
 import type { Customer } from "./api/types";
 
 const ava: Customer = {
@@ -27,9 +26,7 @@ function renderApp() {
   return render(
     <QueryClientProvider client={queryClient}>
       <ThemeProvider>
-        <SegmentProvider>
-          <App />
-        </SegmentProvider>
+        <App />
       </ThemeProvider>
     </QueryClientProvider>,
   );
@@ -56,6 +53,26 @@ describe("App", () => {
       ),
     ).toBeInTheDocument();
     expect(loading).not.toBeInTheDocument();
+  });
+
+  // api-contract.md: the customer's `segment` is the default until the
+  // switch overrides it.
+  it("starts on the customer's segment from the API", async () => {
+    localStorage.clear();
+    document.documentElement.setAttribute("data-segment", "retail");
+    server.use(
+      http.get("*/api/customer", () =>
+        HttpResponse.json({ customer: { ...ava, segment: "premium" } }),
+      ),
+    );
+    renderApp();
+
+    await screen.findByText(
+      `Good evening, ${ava.firstName}`,
+      {},
+      { timeout: 3000 },
+    );
+    expect(document.documentElement).toHaveAttribute("data-segment", "premium");
   });
 
   // E4.3

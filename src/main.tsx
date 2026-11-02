@@ -4,7 +4,6 @@ import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import App from "./App";
 import { ThemeProvider } from "./theme/ThemeContext";
 import "./index.css";
-import { SegmentProvider } from "./theme/SegmentContext";
 
 async function enableMocking() {
   const { worker } = await import("./mocks/browser");
@@ -45,9 +44,7 @@ async function bootstrap() {
     <StrictMode>
       <QueryClientProvider client={queryClient}>
         <ThemeProvider>
-          <SegmentProvider>
-            <App />
-          </SegmentProvider>
+          <App />
         </ThemeProvider>
       </QueryClientProvider>
     </StrictMode>,
