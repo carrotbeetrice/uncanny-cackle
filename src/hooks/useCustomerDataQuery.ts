@@ -37,11 +37,9 @@ export default function useCustomerDataQuery(): UseCustomerDataQueryResult {
   });
 
   function retry() {
-    Promise.all([
-      customerResponse.refetch,
-      accountsResponse.refetch,
-      transactionsResponse.refetch,
-    ]);
+    if (customerResponse.isError) customerResponse.refetch();
+    if (accountsResponse.isError) accountsResponse.refetch();
+    if (transactionsResponse.isError) transactionsResponse.refetch();
   }
 
   if (

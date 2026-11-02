@@ -1,19 +1,26 @@
+import DashboardSkeleton from "./components/DashboardSkeleton/DashboardSkeleton";
 import Header from "./components/Header/Header";
+import RetryState from "./components/RetryState/RetryState";
 import useCustomerDataQuery from "./hooks/useCustomerDataQuery";
 
 export default function App() {
   const customerData = useCustomerDataQuery();
 
-  if (customerData.isLoading) {
-    return <>Placeholder</>;
-  }
-
   return (
     <div className="starter">
       <Header customer={customerData.data?.customer} />
       <main className="starter-main">
-        <h1>Build the dashboard and transfer flow</h1>
-        <p>Hello world!</p>
+        {customerData.isLoading ? (
+          <DashboardSkeleton />
+        ) : customerData.isError ? (
+          <RetryState handleRetry={customerData.retry} />
+        ) : (
+          <>
+            {customerData.data?.customer && (
+              <h1>Good evening, {customerData.data?.customer.firstName}</h1>
+            )}
+          </>
+        )}
       </main>
     </div>
   );
