@@ -30,6 +30,9 @@ jobs:
       - name: Lint, typecheck and test
         run: npm run check
 
+  build:
+    needs: test
+    steps:
       - name: Build
         run: npm run build
 
