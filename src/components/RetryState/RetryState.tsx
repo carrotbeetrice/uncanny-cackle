@@ -1,3 +1,4 @@
+import { Button } from "@headlessui/react";
 import "./RetryState.css";
 
 interface RetryStateProps {
@@ -10,13 +11,12 @@ export default function RetryState({ handleRetry }: RetryStateProps) {
       <p className="retry-state__message" role="alert">
         We couldn't load your dashboard.
       </p>
-      <button
+      <Button
         className="retry-state__button"
-        type="button"
         onClick={handleRetry}
       >
         Retry
-      </button>
+      </Button>
     </div>
   );
 }

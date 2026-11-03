@@ -1,3 +1,4 @@
+import { Input } from "@headlessui/react";
 import { useEffect } from "react";
 import "./Search.css";
 
@@ -18,7 +19,7 @@ export default function Search({ value, onChange, onSearch }: SearchProps) {
   }, [value, onSearch]);
 
   return (
-    <input
+    <Input
       type="search"
       className="search"
       placeholder="Search transactions"
