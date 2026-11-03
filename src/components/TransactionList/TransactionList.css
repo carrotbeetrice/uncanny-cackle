@@ -71,11 +71,11 @@
   padding: 0 var(--space-2);
 }
 
-.transaction-list__clear:hover {
+.transaction-list__clear[data-hover] {
   color: var(--brand-hover);
 }
 
-.transaction-list__clear:focus-visible {
+.transaction-list__clear[data-focus] {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }

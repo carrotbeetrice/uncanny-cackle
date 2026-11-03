@@ -69,7 +69,7 @@ describe("Header", () => {
       render(<Header customer={ava} />, { wrapper: Providers });
 
       expect(
-        screen.getByRole("button", { name: /dark mode/i }),
+        screen.getByRole("switch", { name: /dark mode/i }),
       ).toBeInTheDocument();
     });
 
@@ -77,10 +77,10 @@ describe("Header", () => {
       render(<Header customer={ava} />, { wrapper: Providers });
 
       expect(
-        screen.getByRole("button", { name: "Retail" }),
+        screen.getByRole("radio", { name: "Retail" }),
       ).toBeInTheDocument();
       expect(
-        screen.getByRole("button", { name: "Premium" }),
+        screen.getByRole("radio", { name: "Premium" }),
       ).toBeInTheDocument();
     });
   });

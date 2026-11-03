@@ -1,3 +1,4 @@
+import { Button } from "@headlessui/react";
 import { useState } from "react";
 import type { Transaction as TransactionData } from "../../api/types";
 import Search from "./Search/Search";
@@ -52,13 +53,12 @@ export default function TransactionList({
             {displayedTransactions.length}{" "}
             {displayedTransactions.length === 1 ? "result" : "results"}
           </p>
-          <button
-            type="button"
+          <Button
             className="transaction-list__clear"
             onClick={clearSearch}
           >
             Clear search
-          </button>
+          </Button>
         </div>
       )}
 
@@ -74,13 +74,12 @@ export default function TransactionList({
             <p className="transaction-list__empty-message" aria-live="polite">
               No transactions match your search.
             </p>
-            <button
-              type="button"
+            <Button
               className="transaction-list__clear"
               onClick={clearSearch}
             >
               Clear search
-            </button>
+            </Button>
           </div>
         )
       )}

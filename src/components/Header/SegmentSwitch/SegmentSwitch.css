@@ -8,27 +8,30 @@
 }
 
 .segment-switch-option {
+  /* Radio renders a div, so centre the label ourselves */
+  align-items: center;
   background: transparent;
   border: 0;
   border-radius: 999px;
   color: var(--text-muted);
   cursor: pointer;
+  display: inline-flex;
   font-size: var(--text-sm);
   font-weight: var(--weight-medium);
   min-height: 44px;
   padding: 0 var(--space-4);
 }
 
-.segment-switch-option:hover {
+.segment-switch-option[data-hover] {
   color: var(--text);
 }
 
-.segment-switch-option[aria-pressed="true"] {
+.segment-switch-option[data-checked] {
   background: var(--brand);
   color: var(--on-brand);
 }
 
-.segment-switch-option:focus-visible {
+.segment-switch-option[data-focus] {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }
