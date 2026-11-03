@@ -1,18 +1,20 @@
+import { Switch } from "@headlessui/react";
 import { useTheme } from "../../../theme/ThemeContext";
 import "./ThemeToggle.css";
 
+// Headless UI's Switch renders a button with role="switch" and aria-checked,
+// and handles Space/Enter for us.
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme();
 
   return (
-    <button
-      type="button"
+    <Switch
       className="theme-toggle"
       aria-label="Dark mode"
-      aria-pressed={theme === "dark"}
-      onClick={toggleTheme}
+      checked={theme === "dark"}
+      onChange={toggleTheme}
     >
       ◐
-    </button>
+    </Switch>
   );
 }

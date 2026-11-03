@@ -30,15 +30,15 @@
   transition: background var(--duration-fast) var(--ease-out);
 }
 
-.retry-state__button:hover {
+.retry-state__button[data-hover] {
   background: var(--brand-hover);
 }
 
-.retry-state__button:active {
+.retry-state__button[data-active] {
   background: var(--brand-active);
 }
 
-.retry-state__button:focus-visible {
+.retry-state__button[data-focus] {
   outline: 2px solid var(--focus-ring);
   outline-offset: 2px;
 }

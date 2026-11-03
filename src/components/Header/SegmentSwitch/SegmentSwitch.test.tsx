@@ -8,7 +8,8 @@ import SegmentSwitch from './SegmentSwitch'
 // contract is:
 // - `<SegmentSwitch />` takes no props and reads the segment from
 //   SegmentProvider (saved choice ?? customer's `defaultSegment` ?? retail)
-// - `Retail` / `Premium` buttons with `aria-pressed`
+// - `Retail` / `Premium` radios in a `Customer segment` radiogroup, with
+//   `aria-checked`
 // - the segment is set on <html> as `data-segment`
 // - the choice is saved to localStorage under `meridian-segment`
 
@@ -33,12 +34,12 @@ describe('SegmentSwitch (TH2, TH3)', () => {
     renderSwitch('premium')
 
     expect(html).toHaveAttribute('data-segment', 'premium')
-    expect(screen.getByRole('button', { name: 'Premium' })).toHaveAttribute(
-      'aria-pressed',
+    expect(screen.getByRole('radio', { name: 'Premium' })).toHaveAttribute(
+      'aria-checked',
       'true',
     )
-    expect(screen.getByRole('button', { name: 'Retail' })).toHaveAttribute(
-      'aria-pressed',
+    expect(screen.getByRole('radio', { name: 'Retail' })).toHaveAttribute(
+      'aria-checked',
       'false',
     )
   })
@@ -48,16 +49,16 @@ describe('SegmentSwitch (TH2, TH3)', () => {
     html.setAttribute('data-theme', 'dark')
     renderSwitch()
 
-    await user.click(screen.getByRole('button', { name: 'Premium' }))
+    await user.click(screen.getByRole('radio', { name: 'Premium' }))
 
     expect(html).toHaveAttribute('data-segment', 'premium')
     expect(html).toHaveAttribute('data-theme', 'dark')
-    expect(screen.getByRole('button', { name: 'Premium' })).toHaveAttribute(
-      'aria-pressed',
+    expect(screen.getByRole('radio', { name: 'Premium' })).toHaveAttribute(
+      'aria-checked',
       'true',
     )
-    expect(screen.getByRole('button', { name: 'Retail' })).toHaveAttribute(
-      'aria-pressed',
+    expect(screen.getByRole('radio', { name: 'Retail' })).toHaveAttribute(
+      'aria-checked',
       'false',
     )
   })
@@ -66,7 +67,7 @@ describe('SegmentSwitch (TH2, TH3)', () => {
     const user = userEvent.setup()
     renderSwitch()
 
-    await user.click(screen.getByRole('button', { name: 'Premium' }))
+    await user.click(screen.getByRole('radio', { name: 'Premium' }))
 
     expect(localStorage.getItem('meridian-segment')).toBe('premium')
   })
@@ -76,8 +77,8 @@ describe('SegmentSwitch (TH2, TH3)', () => {
     renderSwitch('retail')
 
     expect(html).toHaveAttribute('data-segment', 'premium')
-    expect(screen.getByRole('button', { name: 'Premium' })).toHaveAttribute(
-      'aria-pressed',
+    expect(screen.getByRole('radio', { name: 'Premium' })).toHaveAttribute(
+      'aria-checked',
       'true',
     )
   })
