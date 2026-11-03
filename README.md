@@ -80,7 +80,13 @@ src
 
 ## Loading, empty and error states
 
-How you handled them, and how to see each one in the deployed app.
+- **Loading (D1):** While any of the 3 queries is loading, `DashboardSkeleton` replaces the page. It copies the dashboard layout (greeting, total, 3 account cards, 8 transaction rows), so nothing jumps when the data arrives. It's a `role="status"` with `aria-busy` and the hidden text "Loading your dashboard…". It also shows again after `Retry`.
+  - To see it: reload the deployed app
+- **Error (D7):** If any query fails, `RetryState` shows `We couldn't load your dashboard.` in a `role="alert"` with a `Retry` button. `Retry` refetches only the queries that failed.
+  - To see it: run `src/App.test.tsx`, which fails the first `/api/customer` request. The deployed app has no debug menu to add `?scenario=error` to the requests, so the state can't be triggered there.
+- **Empty search (D6):** When a search has no matches, the list shows `No transactions match your search.` with a `Clear search` button, which restores the list.
+  - To see it: type something that does not match any displayed description or category (e.g. `zzz`) into `Search transactions`.
+- **Empty transaction list:** Not handled. If `/api/transactions` returns no rows (`?scenario=empty`), the section shows only its heading and search box, with no message.
 
 ## Tests
 
@@ -147,6 +153,13 @@ Two or three places where you changed, rejected or fixed what the AI produced:
 
 Not done: `D3`, `D4`, `D8`, `T1–T8`, `E3`, `E4` (partially implemented, only failed-load-and-Retry test is done)
 
+Known issues:
+
+- No empty transaction list state. If `/api/transactions` returns no rows, the section shows only its heading and search box. The brief lists "empty states" as required but only defines no search matches for transactions (`wireframes/wireframe.md` §7), so the copy and design are unspecified.
+- A failed background refetch hides loaded data. TanStack Query refetches stale queries when the tab regains focus. If that refetch fails, `useCustomerDataQuery` reports `isError` even though the old data is still cached, so `RetryState` replaces a working dashboard. Fix: report an error only when a query fails and has no data.
+- In-app browsers (e.g. opening the link from Slack or LinkedIn on iOS) and Safari private mode restrict service workers, so the mock API can't start. `main.tsx` still renders after its 2.5 s timeout, however `/api/*` requests get a 404 from Netlify, and the dashboard shows its error state. `Retry` can't recover; open the link in a normal browser window instead.
+
 Potential areas of improvement:
 
 - Use a custom debounce hook for the `Search` component. Either define one within the app or use an existing React library, e.g. [use-debounce](https://www.npmjs.com/package/use-debounce)
+- Structure the `components` directory according to the Atomic Design pattern
