@@ -33,7 +33,7 @@ export default function useCustomerDataQuery(): UseCustomerDataQueryResult {
   });
   const transactionsResponse = useQuery<TransactionsResponse>({
     queryKey: ["transactions"],
-    queryFn: () => apiFetch<TransactionsResponse>("/api/transactions"),
+    queryFn: () => apiFetch<TransactionsResponse>("/api/transactions?limit=8"),
   });
 
   function retry() {
